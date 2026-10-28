@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Khojo — a simple search website">
+<title>Khojo — Search the Web</title>
+<style>
+  :root { color-scheme: light dark; --text:#202124; --muted:#5f6368; --line:#dfe1e5; --blue:#1a73e8; --bg:#fff; --soft:#f8f9fa; }
+  @media (prefers-color-scheme: dark) { :root { --text:#e8eaed; --muted:#bdc1c6; --line:#5f6368; --blue:#8ab4f8; --bg:#202124; --soft:#303134; } }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column; }
+  header { display:flex; justify-content:flex-end; gap:18px; padding:18px 24px; font-size:14px; }
+  a { color:var(--blue); text-decoration:none; } a:hover { text-decoration:underline; }
+  main { width:min(680px, calc(100% - 32px)); margin: clamp(70px, 16vh, 150px) auto 40px; text-align:center; flex:1; }
+  .logo { font-size:clamp(48px, 10vw, 76px); font-weight:600; letter-spacing:-4px; margin:0 0 24px; }
+  .logo span:nth-child(1){color:#4285f4}.logo span:nth-child(2){color:#ea4335}.logo span:nth-child(3){color:#fbbc05}.logo span:nth-child(4){color:#4285f4}.logo span:nth-child(5){color:#34a853}.logo span:nth-child(6){color:#ea4335}
+  .tagline { color:var(--muted); margin:-12px 0 26px; font-size:14px; }
+  form { display:flex; align-items:center; gap:10px; border:1px solid var(--line); border-radius:28px; padding:7px 10px 7px 17px; box-shadow:0 1px 5px #00000010; }
+  form:focus-within, form:hover { box-shadow:0 1px 8px #00000022; }
+  .mag { color:var(--muted); font-size:20px; }
+  input { flex:1; min-width:0; border:0; outline:0; background:transparent; color:var(--text); font-size:16px; padding:9px 0; }
+  button { border:0; border-radius:22px; padding:11px 18px; background:var(--soft); color:var(--text); cursor:pointer; font-size:14px; }
+  button:hover { outline:1px solid var(--line); }
+  .buttons { display:flex; justify-content:center; gap:12px; margin:24px 0; flex-wrap:wrap; }
+  .hint { font-size:13px; color:var(--muted); line-height:1.6; }
+  footer { display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; background:var(--soft); border-top:1px solid var(--line); padding:16px 24px; color:var(--muted); font-size:13px; }
+  footer div { display:flex; gap:18px; flex-wrap:wrap; }
+  @media(max-width:480px){ header{padding:16px} form{gap:7px;padding-left:13px} form button{padding:10px 12px} footer{justify-content:center} }
+</style>
+</head>
+<body>
+<header><a href="https://www.google.com/" target="_blank" rel="noopener">Web</a><a href="https://www.wikipedia.org/" target="_blank" rel="noopener">Wikipedia</a></header>
+<main>
+  <h1 class="logo" aria-label="Khojo"><span>K</span><span>h</span><span>o</span><span>j</span><span>o</span></h1>
+  <p class="tagline">Duniya mein kuch bhi khojo</p>
+  <form id="searchForm" role="search">
+    <span class="mag" aria-hidden="true">⌕</span>
+    <input id="query" type="search" name="q" aria-label="Search the web" placeholder="Yahan search karein..." autocomplete="off" required>
+    <button type="submit">Search</button>
+  </form>
+  <div class="buttons">
+    <button type="submit" form="searchForm">Khojo Search</button>
+    <button type="button" id="lucky">Surprise me</button>
+  </div>
+  <p class="hint">Yeh aapki pehli search website ka starter version hai.<br>Search results abhi Google ke public search page par khulte hain.</p>
+</main>
+<footer>
+  <div><span>Khojo Search</span><span>Free starter website</span></div>
+  <div><a href="https://github.com/" target="_blank" rel="noopener">Host this site</a><a href="https://www.google.com/" target="_blank" rel="noopener">Search provider</a></div>
+</footer>
+<script>
+  const form = document.getElementById('searchForm');
+  const input = document.getElementById('query');
+  function search(q) {
+    const query = (q || '').trim();
+    if (!query) { input.focus(); return; }
+    // Starter version: use a public search provider. Replace this URL later
+    // if you integrate a licensed search API or your own search index.
+    window.location.href = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+  }
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    search(input.value);
+  });
+  document.getElementById('lucky').addEventListener('click', function() {
+    const suggestions = ['India', 'space exploration', 'learn coding', 'Odisha tourism', 'science facts'];
+    search(suggestions[Math.floor(Math.random() * suggestions.length)]);
+  });
+</script>
+</body>
+</html>
